@@ -135,7 +135,10 @@ To run the dashboard (frontend), please clone the dashboard project from git ([U
 
 ---
 
+
 ## Assumptions & Trade-offs
+
+- **Database Migrations:** Database migration scripts are not required for this project. In development mode, TypeORM is configured to automatically synchronize and update the database schema based on the current entity definitions. This streamlines development but is not recommended for production environments.
 
 - **Database:** The API expects a running database (e.g., PostgreSQL). Connection details should be configured in `src/database/data-source.ts` or via environment variables.
 - **Authentication:** No authentication is implemented for simplicity. In production, add proper auth (e.g., JWT).
