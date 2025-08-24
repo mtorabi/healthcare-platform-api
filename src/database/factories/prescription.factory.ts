@@ -9,6 +9,8 @@ export default setSeederFactory(Prescription, (faker) => {
     prescription.quantity = Math.floor(Math.random() * 10) + 1;
 
     prescription.line_cost = parseFloat(faker.finance.amount({ min: 1, max: 50 }));
-    prescription.drug_code_atc = faker.string.alphanumeric(7).toUpperCase();
+    
+    //it will generate just 20 unique drug codes
+    prescription.drug_code_atc = 'CB123' + Math.floor(Math.random() * 20) + 1;
     return prescription;
 });
