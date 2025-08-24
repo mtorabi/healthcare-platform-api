@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Check, Index } from "typeorm";
-import { Patient } from "./patient.entity";
+import { Patient } from "../../patients/entities/patient.entity";
 
 @Check("CK_claim_total_cost_non_negative", "total_cost >= 0")
 @Check("CK_claim_submission_before_reimbursement", "submission_date < reimbursement_date")

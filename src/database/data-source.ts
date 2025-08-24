@@ -18,7 +18,7 @@ export const dataSourceOptions: DataSourceOptions & SeederOptions = {
     password: configService.get<string>('DB_PASS'),
     database: configService.get<string>('DB_NAME'),
     synchronize: configService.get<string>('NODE_ENV') === 'development', // TODO: migrations
-    entities: ['src/entities/**/*.entity.ts'],
+    entities: ['src/**/*.entity.ts'],
     seeds: seeders,
     factories: ['dist/database/factories/**/*.js'],
 

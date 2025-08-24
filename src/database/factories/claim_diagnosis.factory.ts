@@ -1,6 +1,6 @@
 // src/db/factories/user.factory.ts
-import { Claim } from 'src/entities/claim.entity';
-import { ClaimDiagnosis } from 'src/entities/claim_diagnosis.entity';
+import { Claim } from 'src/claims/entities/claim.entity';
+import { ClaimDiagnosis } from 'src/claims/entities/claim_diagnosis.entity';
 import { setSeederFactory } from 'typeorm-extension';
 
 export default setSeederFactory(ClaimDiagnosis, (faker) => {

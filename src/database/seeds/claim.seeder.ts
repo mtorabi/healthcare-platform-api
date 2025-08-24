@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Claim } from '../../entities/claim.entity';
+import { Claim } from '../../claims/entities/claim.entity';
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
 
 export default class ClaimSeeder implements Seeder {

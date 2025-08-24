@@ -1,5 +1,5 @@
-import { Gender } from "src/entities/gender";
-import { Patient } from "src/entities/patient.entity";
+import { Gender } from "src/patients/entities/gender";
+import { Patient } from "src/patients/entities/patient.entity";
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
 

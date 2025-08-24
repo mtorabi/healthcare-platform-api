@@ -1,6 +1,6 @@
 // src/db/factories/user.factory.ts
-import { Gender } from 'src/entities/gender';
-import { Patient } from 'src/entities/patient.entity';
+import { Gender } from 'src/patients/entities/gender';
+import { Patient } from 'src/patients/entities/patient.entity';
 import { setSeederFactory } from 'typeorm-extension';
 
 export default setSeederFactory(Patient, (faker) => {
