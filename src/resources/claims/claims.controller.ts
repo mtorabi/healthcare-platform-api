@@ -24,7 +24,7 @@ export class ClaimsController {
     return this.claimsService.findAll();
   }
 
-  @Get('claims-cost')
+  @Get('cost-per-patient')
   @ApiResponse({
     status: 200, description: 'Total claim cost per patient', schema: {
       type: 'array',
