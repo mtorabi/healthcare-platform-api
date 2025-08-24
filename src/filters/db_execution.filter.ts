@@ -16,7 +16,7 @@ export class DBExceptionFilter implements ExceptionFilter {
         const errorCode = (exception as any).code;
 
         let status = HttpStatus.INTERNAL_SERVER_ERROR;
-        let message = 'Database error';
+        let message = 'error';
 
         // Customize based on error code
         switch (errorCode) {
@@ -37,7 +37,7 @@ export class DBExceptionFilter implements ExceptionFilter {
                 message = 'Check constraint failed';
                 break;
         }
-
+        console.log('error:', exception);
         response.status(status).json({
             statusCode: status,
             message,
