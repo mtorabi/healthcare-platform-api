@@ -1,6 +1,6 @@
 import { setSeederFactory } from 'typeorm-extension';
-import { Claim } from '../../claims/entities/claim.entity';
-import { Patient } from 'src/patients/entities/patient.entity';
+import { Claim } from '../../resources/claims/entities/claim.entity';
+import { Patient } from 'src/resources/patients/entities/patient.entity';
 
 export default setSeederFactory(Claim, (faker) => {
     const claim = new Claim();

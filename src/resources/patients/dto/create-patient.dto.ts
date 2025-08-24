@@ -6,6 +6,6 @@ export class CreatePatientDto {
     @ApiProperty()
     public readonly year_of_birth: string;
 
-    @ApiProperty({ enum: Gender })
+    @ApiProperty({ enum: Object.values(Gender) })
     public readonly sex: Gender;
 }

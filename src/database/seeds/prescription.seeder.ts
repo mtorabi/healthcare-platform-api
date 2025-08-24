@@ -1,5 +1,5 @@
 
-import { Prescription } from "src/claims/entities/prescription.entity";
+import { Prescription } from "src/resources/claims/entities/prescription.entity";
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
 

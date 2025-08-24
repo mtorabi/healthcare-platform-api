@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
 import { Claim } from "./claim.entity";
 
 @Entity()
