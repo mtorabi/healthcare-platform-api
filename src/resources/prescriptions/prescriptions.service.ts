@@ -55,7 +55,7 @@ export class PrescriptionsService {
     }
   }
 
-  async topPrescribedDrugs(from: Date, to: Date, count: number): Promise<any[]> {
+  async topPrescribedDrugs(from: Date, to: Date, count: number): Promise<{ drug_code_atc: string; count: number }[]> {
     // Use QueryBuilder to replicate the SQL query without passing raw SQL string
     const results = await this.entityManager
       .createQueryBuilder(Prescription, 'prescription')

@@ -134,8 +134,8 @@ describe('PrescriptionsService', () => {
       expect(service['mockQueryBuilder'].orderBy).toHaveBeenCalledWith('count', 'DESC');
       expect(service['mockQueryBuilder'].limit).toHaveBeenCalledWith(count);
       expect(result).toEqual([
-        { drug: 'A01', count: 5 },
-        { drug: 'B02', count: 3 },
+        { drug_code_atc: 'A01', count: 5 },
+        { drug_code_atc: 'B02', count: 3 },
       ]);
     });
   });

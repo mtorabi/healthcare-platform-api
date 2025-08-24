@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ClaimsController } from './claims.controller';
 import { ClaimsService } from './claims.service';
-import { Entity, EntityManager } from 'typeorm';
 
 describe('ClaimsController', () => {
+
   let controller: ClaimsController;
   let service: ClaimsService;
 
@@ -19,6 +19,7 @@ describe('ClaimsController', () => {
             findOne: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            claimCostPerPatient: jest.fn(),
           },
         },
       ],
@@ -75,6 +76,21 @@ describe('ClaimsController', () => {
       jest.spyOn(service, 'remove').mockResolvedValue(true);
       expect(await controller.remove('1')).toEqual(true);
       expect(service.remove).toHaveBeenCalledWith(1);
+    });
+  });
+  describe('claimCostPerPatient', () => {
+    it('should call service.claimCostPerPatient with patientId and return the result', async () => {
+      const result = 123.45;
+      jest.spyOn(service, 'claimCostPerPatient').mockResolvedValue(result as any);
+      expect(await controller.claimCostPerPatient(1)).toEqual(result);
+      expect(service.claimCostPerPatient).toHaveBeenCalledWith(1);
+    });
+
+    it('should call service.claimCostPerPatient with undefined if patientId is not provided', async () => {
+      const result = 456.78;
+      jest.spyOn(service, 'claimCostPerPatient').mockResolvedValue(result as any);
+      expect(await controller.claimCostPerPatient(undefined as any)).toEqual(result);
+      expect(service.claimCostPerPatient).toHaveBeenCalledWith(undefined);
     });
   });
 });

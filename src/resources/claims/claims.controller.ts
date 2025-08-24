@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { Claim } from './entities/claim.entity';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
@@ -8,7 +8,7 @@ import { ClaimsService } from './claims.service';
 @ApiTags('claims')
 @Controller('claims')
 export class ClaimsController {
-  constructor(private readonly claimsService: ClaimsService) {}
+  constructor(private readonly claimsService: ClaimsService) { }
 
   @Post()
   @ApiResponse({ status: 201, description: 'The claim has been successfully created.', type: Claim })
@@ -22,6 +22,24 @@ export class ClaimsController {
   @ApiResponse({ status: 200, description: 'List of all claims', type: [Claim] })
   findAll() {
     return this.claimsService.findAll();
+  }
+
+  @Get('claim-cost')
+  @ApiResponse({
+    status: 200, description: 'Total claim cost per patient', schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          patientId: { type: 'number', example: 1 },
+          totalClaimCost: { type: 'number', example: 100.50 }
+        },
+      },
+    },
+  })
+  @ApiQuery({ name: 'patientId', required: false, type: Number, description: 'ID of the patient to get total claim cost for', example: 1 })
+  claimCostPerPatient(@Query('patientId') patientId: number) {
+    return this.claimsService.claimCostPerPatient(patientId);
   }
 
   @Get(':id')

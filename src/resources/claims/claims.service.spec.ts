@@ -19,6 +19,7 @@ describe('ClaimsService', () => {
       findOne: jest.fn(),
       save: jest.fn(),
       delete: jest.fn(),
+      createQueryBuilder: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -126,6 +127,54 @@ describe('ClaimsService', () => {
       const result = await service.remove(1);
       expect(result).toBe(true);
       expect(entityManager.delete).toHaveBeenCalledWith(Claim, { claim_id: 1 });
+    });
+  });
+
+  describe('claimCostPerPatient', () => {
+    it('should return total claim cost per patient for all patients', async () => {
+      const mockRaw = [
+        { patient_id: 1, total: 100 },
+        { patient_id: 2, total: 200 },
+      ];
+      const mockQueryBuilder: any = {
+        select: jest.fn().mockReturnThis(),
+        addSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        groupBy: jest.fn().mockReturnThis(),
+        getRawMany: jest.fn().mockResolvedValue(mockRaw),
+      };
+      jest.spyOn(entityManager, 'createQueryBuilder').mockReturnValue(mockQueryBuilder);
+
+      const result = await service.claimCostPerPatient();
+      expect(entityManager.createQueryBuilder).toHaveBeenCalledWith(Claim, 'claim');
+      expect(mockQueryBuilder.select).toHaveBeenCalledWith('claim.patient_id');
+      expect(mockQueryBuilder.addSelect).toHaveBeenCalledWith('SUM(claim.total_cost) as total');
+      expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('claim.patient_id');
+      expect(mockQueryBuilder.getRawMany).toHaveBeenCalled();
+      expect(result).toEqual([
+        { patient_id: 1, totalClaimCost: 100 },
+        { patient_id: 2, totalClaimCost: 200 },
+      ]);
+    });
+
+    it('should filter by patientId if provided', async () => {
+      const mockRaw = [
+        { patient_id: 1, total: 150 },
+      ];
+      const mockQueryBuilder: any = {
+        select: jest.fn().mockReturnThis(),
+        addSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        groupBy: jest.fn().mockReturnThis(),
+        getRawMany: jest.fn().mockResolvedValue(mockRaw),
+      };
+      jest.spyOn(entityManager, 'createQueryBuilder').mockReturnValue(mockQueryBuilder);
+
+      const result = await service.claimCostPerPatient(1);
+      expect(mockQueryBuilder.where).toHaveBeenCalledWith('claim.patient_id = :patientId', { patientId: 1 });
+      expect(result).toEqual([
+        { patient_id: 1, totalClaimCost: 150 },
+      ]);
     });
   });
 });

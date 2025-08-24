@@ -16,7 +16,7 @@ export class ClaimsService {
     private readonly entityManager: EntityManager,
   ) { }
 
-  public async create(createClaimDto: CreateClaimDto) {
+  async create(createClaimDto: CreateClaimDto) {
 
     return await this.entityManager.transaction(async entityManager => {
 
@@ -83,7 +83,22 @@ export class ClaimsService {
   }
 
   async remove(id: number): Promise<boolean> {
-      await this.entityManager.delete(Claim, { claim_id: id });
-      return true;
+    await this.entityManager.delete(Claim, { claim_id: id });
+    return true;
+  }
+
+  async claimCostPerPatient(patientId?: number): Promise<{ patient_id: number; totalClaimCost: number }[]> {
+    const query = this.entityManager.createQueryBuilder(Claim, 'claim')
+      .select('claim.patient_id')
+      .addSelect('SUM(claim.total_cost) as total');
+    if (patientId !== null && patientId !== undefined) {
+      query.where('claim.patient_id = :patientId', { patientId });
+    }
+    query.groupBy('claim.patient_id');
+    const claims = await query.getRawMany();
+    return claims.map((claim) => ({
+      patient_id: claim.patient_id,
+      totalClaimCost: claim.total
+    }));
   }
 }
