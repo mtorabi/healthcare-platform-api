@@ -1,98 +1,145 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Healthcare Platform API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project provides a backend API for managing healthcare data, including patients, claims, and prescriptions. It is built with [NestJS](https://nestjs.com/) and supports running both with and without Docker Compose.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Table of Contents
+- [Healthcare Platform API](#healthcare-platform-api)
+  - [Table of Contents](#table-of-contents)
+  - [Setup Instructions](#setup-instructions)
+    - [With Docker Compose](#with-docker-compose)
+    - [Without Docker Compose](#without-docker-compose)
+  - [API Documentation](#api-documentation)
+  - [API Usage](#api-usage)
+    - [Patients](#patients)
+    - [Claims](#claims)
+    - [Prescriptions](#prescriptions)
+  - [Running the Dashboard](#running-the-dashboard)
+  - [Assumptions \& Trade-offs](#assumptions--trade-offs)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## Setup Instructions
 
-```bash
-$ npm install
-```
+### With Docker Compose
+1. Ensure you have [Docker](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/) installed.
+2. In the project root (`healthcare-platform-api`), run:
 
-## Compile and run the project
+	```sh
+	docker-compose up --build
+	```
 
-```bash
-# development
-$ npm run start
+3. (Optional) To seed the database, run:
+	```sh
+	docker-compose run --rm seed
+	```
 
-# watch mode
-$ npm run start:dev
+4. The API will be available at `http://localhost:3000` (default).
 
-# production mode
-$ npm run start:prod
-```
+### Without Docker Compose
 
-## Run tests
+1. Ensure you have [Node.js](https://nodejs.org/) (v18+) and [npm](https://www.npmjs.com/) installed.
+2. Install dependencies:
 
-```bash
-# unit tests
-$ npm run test
+    ```sh
+    npm install
+    ```
 
-# e2e tests
-$ npm run test:e2e
+3. Configure your database connection in `src/database/data-source.ts` as needed.
+4. (Optional) To seed the database, run:
 
-# test coverage
-$ npm run test:cov
-```
+    ```sh
+    npm run seed
+    ```
+5. Start the server:
 
-## Deployment
+    ```sh
+    npm run start:dev
+    ```
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+   The API will be available at `http://localhost:3000`.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+## API Documentation
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Interactive API documentation is available at: [http://localhost:3000/api](http://localhost:3000/api)
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## API Usage
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+The API exposes endpoints for managing patients, claims, and prescriptions. Below are example requests using `curl`.
 
-## Support
+### Patients
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Create a patient:**
 
-## Stay in touch
+  ```sh
+  curl -X POST http://localhost:3000/patients \
+    -H "Content-Type: application/json" \
+    -d '{"name": "John Doe", "gender": "male", "dob": "1990-01-01"}'
+  ```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **Get all patients:**
 
-## License
+  ```sh
+  curl http://localhost:3000/patients
+  ```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+  - **Get a patient by ID:**
+
+  ```sh
+  curl http://localhost:3000/patients/1
+  ```
+
+### Claims
+
+- **Create a claim:**
+
+  ```sh
+  curl -X POST http://localhost:3000/claims \
+    -H "Content-Type: application/json" \
+    -d '{"patientId": 1, "amount": 100.0, "diagnosis": "A00"}'
+  ```
+  
+  - **Get all claims:**
+
+  ```sh
+  curl http://localhost:3000/claims
+  ```
+
+### Prescriptions
+
+- **Create a prescription:**
+
+  ```sh
+  curl -X POST http://localhost:3000/prescriptions \
+    -H "Content-Type: application/json" \
+    -d '{"patientId": 1, "medication": "Drug A", "dosage": "1 tablet daily"}'
+
+  ```
+
+- **Get all prescriptions:**
+
+  ```sh
+  curl http://localhost:3000/prescriptions
+  ```
+
+---
+
+## Running the Dashboard
+
+To run the dashboard (frontend), please clone the dashboard project from git (URL to be added) and follow the instructions in that project's README file.
+
+---
+
+## Assumptions & Trade-offs
+
+- **Database:** The API expects a running database (e.g., PostgreSQL). Connection details should be configured in `src/database/data-source.ts` or via environment variables.
+- **Authentication:** No authentication is implemented for simplicity. In production, add proper auth (e.g., JWT).
+- **Error Handling:** Basic error handling is provided. For production, consider more robust validation and error reporting.
+- **Docker:** Docker Compose is provided for easy setup, but manual setup is also supported for flexibility.
+- **Test Coverage:** The test coverage for Claims and Prescriptions services and controllers is more than 85%. For the rest of the project, to save time, the coverage has been ignored.
+  
