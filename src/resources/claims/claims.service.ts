@@ -4,7 +4,7 @@ import { UpdateClaimDto } from './dto/update-claim.dto';
 import { Claim } from './entities/claim.entity';
 import { InjectEntityManager } from '@nestjs/typeorm/dist/common/typeorm.decorators';
 import { ClaimDiagnosis } from './entities/claim_diagnosis.entity';
-import { Prescription } from './entities/prescription.entity';
+import { Prescription } from '../prescriptions/entities/prescription.entity';
 import { EntityManager } from 'typeorm';
 import { Patient } from '../patients/entities/patient.entity';
 

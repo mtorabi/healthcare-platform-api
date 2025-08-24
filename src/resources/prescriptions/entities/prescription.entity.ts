@@ -1,5 +1,6 @@
+
+import { Claim } from "../../claims/entities/claim.entity";
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Check, Index } from "typeorm";
-import { Claim } from "./claim.entity";
 
 @Check("CK_prescription_quantity_non_negative", "quantity >= 0")
 @Check("CK_prescription_line_cost_non_negative", "line_cost >= 0")

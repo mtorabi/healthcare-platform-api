@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 import { ConfigModule } from '@nestjs/config/dist/config.module';
 import { ConfigService } from '@nestjs/config';
-import { Patient } from 'src/resources/patients/entities/patient.entity';
-import { Prescription } from 'src/resources/claims/entities/prescription.entity';
-import { ClaimDiagnosis } from 'src/resources/claims/entities/claim_diagnosis.entity';
-import { Claim } from 'src/resources/claims/entities/claim.entity';
+import { Patient } from '../resources/patients/entities/patient.entity';
+import { Prescription } from '../resources/prescriptions/entities/prescription.entity';
+import { ClaimDiagnosis } from '../resources/claims/entities/claim_diagnosis.entity';
+import { Claim } from '../resources/claims/entities/claim.entity';
 
 @Module({
     imports: [
