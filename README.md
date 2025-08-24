@@ -131,7 +131,7 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
 
 ## Running the Dashboard
 
-To run the dashboard (frontend), please clone the dashboard project from git (URL to be added) and follow the instructions in that project's README file.
+To run the dashboard (frontend), please clone the dashboard project from git ([URL](https://github.com/mtorabi/healthcare-platform-dashboard.git)) and follow the instructions in that project's README file.
 
 ---
 
