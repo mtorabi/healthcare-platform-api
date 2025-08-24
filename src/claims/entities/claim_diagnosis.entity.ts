@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
 import { Claim } from "./claim.entity";
 
 @Entity()
@@ -6,7 +6,7 @@ export class ClaimDiagnosis {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Claim)
+  @OneToOne(() => Claim, claim => claim.claim_id, { cascade: true })
   @JoinColumn({ name: "claim_id" })
   claim: Claim;
 
