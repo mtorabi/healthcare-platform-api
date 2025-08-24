@@ -11,7 +11,7 @@ export class PrescriptionsService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {}
+  ) { }
 
   async create(createPrescriptionDto: CreatePrescriptionDto): Promise<Prescription> {
     const prescription = this.entityManager.create(Prescription, {
@@ -53,5 +53,27 @@ export class PrescriptionsService {
     if (result.affected === 0) {
       throw new NotFoundException(`Prescription #${id} not found`);
     }
+  }
+
+  async topPrescribedDrugs(from: Date, to: Date, count: number): Promise<any[]> {
+    // Use QueryBuilder to replicate the SQL query without passing raw SQL string
+    const results = await this.entityManager
+      .createQueryBuilder(Prescription, 'prescription')
+      .select('drug_code_atc')
+      .addSelect('COUNT(drug_code_atc)', 'count')
+      .leftJoin('prescription.claim', 'claim')
+      .where('claim.submission_date BETWEEN :from AND :to', {
+        from: from,
+        to: to,
+      })
+      .groupBy('drug_code_atc')
+      .orderBy('count', 'DESC')
+      .limit(count)
+      .getRawMany();
+
+    return results.map((row) => ({
+      drug: row.drug_code_atc,
+      count: Number(row.count),
+    }));
   }
 }

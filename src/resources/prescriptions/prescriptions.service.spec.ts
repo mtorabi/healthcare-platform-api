@@ -8,6 +8,16 @@ describe('PrescriptionsService', () => {
   let entityManager: any;
 
   beforeEach(async () => {
+    const mockQueryBuilder = {
+      select: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
+      leftJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn(),
+    };
     const mockEntityManager = {
       transaction: jest.fn(),
       find: jest.fn(),
@@ -16,6 +26,7 @@ describe('PrescriptionsService', () => {
       delete: jest.fn(),
       create: jest.fn(),
       preload: jest.fn(),
+      createQueryBuilder: jest.fn(() => mockQueryBuilder),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -27,6 +38,9 @@ describe('PrescriptionsService', () => {
 
     service = module.get<PrescriptionsService>(PrescriptionsService);
     entityManager = module.get<EntityManager>(getEntityManagerToken());
+    service['entityManager'] = entityManager;
+    service['entityManager'].createQueryBuilder = jest.fn(() => mockQueryBuilder);
+    service['mockQueryBuilder'] = mockQueryBuilder;
   });
 
   it('should be defined', () => {
@@ -97,6 +111,32 @@ describe('PrescriptionsService', () => {
     it('should throw NotFoundException if not found', async () => {
       entityManager.delete.mockResolvedValue({ affected: 0 });
       await expect(service.remove(2)).rejects.toThrow('Prescription #2 not found');
+    });
+  });
+
+  describe('topPrescribedDrugs', () => {
+    it('should return top prescribed drugs with correct mapping', async () => {
+      const mockRows = [
+        { drug_code_atc: 'A01', count: '5' },
+        { drug_code_atc: 'B02', count: '3' },
+      ];
+      service['mockQueryBuilder'].getRawMany.mockResolvedValue(mockRows);
+      const from = new Date('2025-01-01T00:00:00.000Z');
+      const to = new Date('2025-08-24T23:59:59.999Z');
+      const count = 2;
+      const result = await service.topPrescribedDrugs(from, to, count);
+      expect(service['entityManager'].createQueryBuilder).toHaveBeenCalledWith(expect.any(Function), 'prescription');
+      expect(service['mockQueryBuilder'].select).toHaveBeenCalledWith('drug_code_atc');
+      expect(service['mockQueryBuilder'].addSelect).toHaveBeenCalledWith('COUNT(drug_code_atc)', 'count');
+      expect(service['mockQueryBuilder'].leftJoin).toHaveBeenCalledWith('prescription.claim', 'claim');
+      expect(service['mockQueryBuilder'].where).toHaveBeenCalledWith('claim.submission_date BETWEEN :from AND :to', { from, to });
+      expect(service['mockQueryBuilder'].groupBy).toHaveBeenCalledWith('drug_code_atc');
+      expect(service['mockQueryBuilder'].orderBy).toHaveBeenCalledWith('count', 'DESC');
+      expect(service['mockQueryBuilder'].limit).toHaveBeenCalledWith(count);
+      expect(result).toEqual([
+        { drug: 'A01', count: 5 },
+        { drug: 'B02', count: 3 },
+      ]);
     });
   });
 });
