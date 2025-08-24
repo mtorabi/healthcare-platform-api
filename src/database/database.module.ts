@@ -1,12 +1,27 @@
 import { Module } from '@nestjs/common';
-import { Type } from 'class-transformer';
-import { dataSourceOptions } from './data-source';
 import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
+import { ConfigModule } from '@nestjs/config/dist/config.module';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(dataSourceOptions),
-    ],
+        ConfigModule.forRoot({
+            isGlobal: true,
+        }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => ({
+            type: 'postgres',
+            host: config.get<string>('DB_HOST'),
+            port: config.get<number>('DB_PORT'),
+            username: config.get<string>('DB_USER'),
+            password: config.get<string>('DB_PASS'),
+            database: config.get<string>('DB_NAME'),
+            synchronize: true,
+            autoLoadEntities: true,
+      }),
+    })],
     providers: [],
     exports: [],
 })
