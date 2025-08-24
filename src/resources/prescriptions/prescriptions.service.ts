@@ -72,7 +72,7 @@ export class PrescriptionsService {
       .getRawMany();
 
     return results.map((row) => ({
-      drug: row.drug_code_atc,
+      drug_code_atc: row.drug_code_atc,
       count: Number(row.count),
     }));
   }
