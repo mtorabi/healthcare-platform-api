@@ -39,12 +39,21 @@ This project provides a backend API for managing healthcare data, including pati
 
 ### Without Docker Compose
 
+
 1. Ensure you have [Node.js](https://nodejs.org/) (v18+) and [npm](https://www.npmjs.com/) installed.
-2. Install dependencies:
+2. Copy the example environment file to create your own configuration:
 
     ```sh
-    npm install
+    cp .env.example .env
     ```
+
+    Then edit `.env` as needed for your environment.
+
+3. Install dependencies:
+
+      ```sh
+      npm install
+      ```
 
 3. Configure your database connection in `src/database/data-source.ts` as needed.
 4. (Optional) To seed the database, run:
