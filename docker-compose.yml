@@ -8,7 +8,7 @@ services:
       target: development
     container_name: nestjs_app_dev
     ports:
-      - "3000:3000"
+      - "3001:3001"
     environment:
       NODE_ENV: development
       DB_HOST: db

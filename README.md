@@ -35,7 +35,7 @@ This project provides a backend API for managing healthcare data, including pati
 	docker-compose run --rm seed
 	```
 
-4. The API will be available at `http://localhost:3000` (default).
+4. The API will be available at `http://localhost:3001` (default).
 
 ### Without Docker Compose
 
@@ -67,13 +67,13 @@ This project provides a backend API for managing healthcare data, including pati
     npm run start:dev
     ```
 
-   The API will be available at `http://localhost:3000`.
+   The API will be available at `http://localhost:3001`.
 
 ---
 
 ## API Documentation
 
-Interactive API documentation is available at: [http://localhost:3000/api](http://localhost:3000/api)
+Interactive API documentation is available at: [http://localhost:3001/api](http://localhost:3001/api)
 
 ---
 
@@ -86,7 +86,7 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
 - **Create a patient:**
 
   ```sh
-  curl -X POST http://localhost:3000/patients \
+  curl -X POST http://localhost:3001/patients \
     -H "Content-Type: application/json" \
     -d '{"name": "John Doe", "gender": "male", "dob": "1990-01-01"}'
   ```
@@ -94,13 +94,13 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
 - **Get all patients:**
 
   ```sh
-  curl http://localhost:3000/patients
+  curl http://localhost:3001/patients
   ```
 
   - **Get a patient by ID:**
 
   ```sh
-  curl http://localhost:3000/patients/1
+  curl http://localhost:3001/patients/1
   ```
 
 ### Claims
@@ -108,7 +108,7 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
 - **Create a claim:**
 
   ```sh
-  curl -X POST http://localhost:3000/claims \
+  curl -X POST http://localhost:3001/claims \
     -H "Content-Type: application/json" \
     -d '{"patientId": 1, "amount": 100.0, "diagnosis": "A00"}'
   ```
@@ -116,7 +116,7 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
   - **Get all claims:**
 
   ```sh
-  curl http://localhost:3000/claims
+  curl http://localhost:3001/claims
   ```
 
 ### Prescriptions
@@ -124,7 +124,7 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
 - **Create a prescription:**
 
   ```sh
-  curl -X POST http://localhost:3000/prescriptions \
+  curl -X POST http://localhost:3001/prescriptions \
     -H "Content-Type: application/json" \
     -d '{"patientId": 1, "medication": "Drug A", "dosage": "1 tablet daily"}'
 
@@ -133,7 +133,7 @@ The API exposes endpoints for managing patients, claims, and prescriptions. Belo
 - **Get all prescriptions:**
 
   ```sh
-  curl http://localhost:3000/prescriptions
+  curl http://localhost:3001/prescriptions
   ```
 
 ---
