@@ -87,7 +87,7 @@ export class ClaimsService {
     return true;
   }
 
-  async claimCostPerPatient(patientId?: number): Promise<{ patient_id: number; totalClaimCost: number }[]> {
+  async claimCostPerPatient(patientId?: number): Promise<{ patientId: number; totalClaimCost: number }[]> {
     const query = this.entityManager.createQueryBuilder(Claim, 'claim')
       .select('claim.patient_id')
       .addSelect('SUM(claim.total_cost) as total');
@@ -97,7 +97,7 @@ export class ClaimsService {
     query.groupBy('claim.patient_id');
     const claims = await query.getRawMany();
     return claims.map((claim) => ({
-      patient_id: claim.patient_id,
+      patientId: claim.patient_id,
       totalClaimCost: claim.total
     }));
   }
