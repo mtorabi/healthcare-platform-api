@@ -55,7 +55,6 @@ This project provides a backend API for managing healthcare data, including pati
       npm install
       ```
 
-3. Configure your database connection in `src/database/data-source.ts` as needed.
 4. (Optional) To seed the database, run:
 
     ```sh
